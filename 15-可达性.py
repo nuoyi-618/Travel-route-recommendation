@@ -6,11 +6,11 @@ Created on Thu Aug  9 10:42:11 2018
 """
 import pandas as pd
 import haversine as ha
-df = pd.read_csv('../data/FG/FG-user-poi-85w(10-100).csv')
-poi = pd.read_csv('../data/poi-38-wgs84.csv') #读取poi
+df = pd.read_csv('../../data/2/try(2-13)/use-poi.csv')
+poi = pd.read_csv('../../data/poi-38-wgs84.csv') #读取poi
 poi.columns=['id','lng','lat','name','type']
 #按用户编号分类
-pieces = dict(list(df.groupby('num')))
+pieces = dict(list(df.groupby('id')))
 kdx=[]
 poi.set_index(['id'],inplace = True)
 #循环计算各个用户上一景点与下一个景点间可达性
@@ -36,9 +36,6 @@ for key in pieces:
         elif 5000<dis:
             dtype=5
         kdx.append(dtype)
-df=df.sort_values(by=['num','date','time'])
+df=df.sort_values(by=['id','date','time'])
 df['kdx']=kdx
-df.to_csv('../data/poi-TZ/poi-TZ(KeDaXing)-85w(10-100)-90%.csv',index=False)
-        
-            
-        
+df.to_csv('../../data/2/try(2-13)/poi-TZ(KeDaXing)-161w.csv',index=False)
